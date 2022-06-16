@@ -1,0 +1,75 @@
+  (* TESTS *)
+  let occ_test = compte_occurences "fichier";;
+val occ_test : int array =
+  [|0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0;
+    0; 0; 0; 0; 0; 0; 0; 0; 7; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 1; 0; 0; 0;
+    0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0;
+    0; 0; 0; 0; 1; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0;
+    0; 2; 0; 4; 2; 6; 0; 1; 1; 8; 0; 0; 2; 3; 2; 4; 2; 0; 4; 4; 5; 2; 0; 0;
+    0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0;
+    0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0;
+    0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0;
+    0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0;
+    0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0;
+    0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0|]
+#
+  let file_huff_test = construit_file_huffman occ_test;;
+val file_huff_test : char xarbre filedepriorite =
+  {arb =
+    Noeud ((1, Feuille ','),
+     Noeud ((1, Feuille 'g'),
+      Noeud ((3, Feuille 'm'), Vide, Noeud ((4, Feuille 'r'), Vide, Vide)),
+      Noeud ((2, Feuille 'a'), Noeud ((4, Feuille 'o'), Vide, Vide),       
+       Noeud ((2, Feuille 'd'), Noeud ((8, Feuille 'i'), Vide, Vide),      
+        Noeud ((5, Feuille 't'), Vide, Vide)))),
+     Noeud ((1, Feuille 'L'),
+      Noeud ((1, Feuille 'h'),
+       Noeud ((2, Feuille 'n'),
+        Noeud ((4, Feuille 'c'), Noeud ((7, Feuille ' '), Vide, Vide), Vide),
+        Vide),
+       Noeud ((4, Feuille 's'), Vide, Vide)),
+      Noeud ((2, Feuille 'l'),
+       Noeud ((2, Feuille 'p'), Noeud ((6, Feuille 'e'), Vide, Vide), Vide),
+       Noeud ((2, Feuille 'u'), Vide, Vide))));
+   taille = 19}
+#
+  let arbre_test = create_arbre_huffman file_huff_test;;
+val arbre_test : char xarbre =
+  XNoeud
+   (XNoeud
+     (XNoeud
+       (Feuille 'e',
+        XNoeud
+         (Feuille 'm',
+          XNoeud
+           (XNoeud (Feuille ',', Feuille 'L'),
+            XNoeud (Feuille 'g', Feuille 'h')))),
+      XNoeud
+       (Feuille ' ',
+        XNoeud
+         (XNoeud (Feuille 'a', Feuille 'd'),
+          XNoeud (Feuille 'l', Feuille 'n')))),
+    XNoeud
+     (XNoeud
+       (XNoeud (XNoeud (Feuille 'p', Feuille 'u'), Feuille 'c'),
+        XNoeud (Feuille 'o', Feuille 'r')),
+      XNoeud (Feuille 'i', XNoeud (Feuille 's', Feuille 't'))))
+# 
+  let table_test = create_code_table arbre_test;;
+val table_test : int list array =
+  [|[]; []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; [];    
+    []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; [0; 1; 0]; 
+    []; []; []; []; []; []; []; []; []; []; []; [0; 0; 1; 1; 0; 0]; [];    
+    []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; [];    
+    []; []; []; []; []; []; []; []; []; []; []; []; []; [1; 0; 1; 1; 0; 0];
+    []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; [];    
+    []; []; []; [0; 0; 1; 1; 0]; []; [1; 0; 0; 1]; [1; 0; 1; 1; 0];        
+    [0; 0; 0]; []; [0; 1; 1; 1; 0; 0]; [1; 1; 1; 1; 0; 0]; [0; 1; 1];      
+    []; []; [0; 1; 1; 1; 0]; [0; 1; 0; 0]; [1; 1; 1; 1; 0]; [0; 1; 0; 1];  
+    [0; 0; 0; 0; 1]; []; [1; 1; 0; 1]; [0; 1; 1; 1]; [1; 1; 1; 1];
+    [1; 0; 0; 0; 1]; []; []; []; []; []; []; []; []; []; []; []; [];       
+    []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; [];    
+    []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; [];    
+    []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; [];    
+    []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; []; [];    
+    []; []; []; []; []; []; []; []; []; []; []; []; []; []; ...|]
