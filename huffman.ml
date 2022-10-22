@@ -19,7 +19,7 @@ let arbre_tasmin_extraitmin arb = if arb = Vide then (failwith "arbre vide")
 
 let rec arbre_tasmin_taille arb = match arb with
 | Vide -> 0
-| Noeud(_, arb1, arb2) -> 1 + (arbre_tasmin_taille arb1) + (arbre_tasmin_taille arb1);;
+| Noeud(_, arb1, arb2) -> 1 + (arbre_tasmin_taille arb1) + (arbre_tasmin_taille arb2);;
 
 (* Structure de file de priorité *)
 type 'a filedepriorite = {mutable arb: (int * 'a) arbre; mutable taille: int};;
